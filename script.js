@@ -78,6 +78,7 @@ function doOperation(operation){
     if (operation.dataset?.value) operatorInput = operation.dataset.value;
     else operatorInput = operation;
 
+    console.log(operatorInput);
     if (operatorInput == "equal") {
         operatorInput = null;
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo;
@@ -141,6 +142,7 @@ function getKeyboardInput(e){
         if (!numberOne && !numberTwo) return;
         if (!operatorInput) {
             if (e.key == "Enter") operatorInput = "equal";
+            if (e.key == "*") operatorInput = "x";
             else operatorInput = e.key;
         }
         if (!numberTwo){
@@ -156,6 +158,7 @@ function getKeyboardInput(e){
         else if (numberTwo && !numberOne){
             if (operatorInput && e.key == "equal")return; 
             if (e.key == "Enter") operatorInput = "equal";
+            if (e.key == "*") operatorInput = "x";
             else operatorInput = e.key;
             topLine.innerHTML = numberTwo + operatorInput;
             }
