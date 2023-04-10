@@ -53,7 +53,8 @@ function getOperator (){
 
 function doOperation(operation){
     let botNumber = parseFloat(numberOne);
-    let topNumber = parseFloat(numberTwo);    
+    let topNumber = parseFloat(numberTwo);     
+    if (operation == "Enter") operation = 'equal';
 
     switch(operatorInput){
         case "+":  
@@ -78,7 +79,6 @@ function doOperation(operation){
     if (operation.dataset?.value) operatorInput = operation.dataset.value;
     else operatorInput = operation;
 
-    console.log(operatorInput);
     if (operatorInput == "equal") {
         operatorInput = null;
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo;
@@ -121,11 +121,13 @@ function advMode (){
 }
 
 function getKeyboardInput(e){
+    const regex = /^\d|\.|\+|\-|\*|Enter|Delete|\/$/;
+    if (!regex.test(e.key)) return; 
     if (e.key == "Delete") {
         lineClear ();
         return;
-    }
-    if (parseInt(e.key) || e.key == 0){
+    }       
+    if (parseInt(e.key) || e.key == 0 || e.key =="."){
         if (numberOne == null) {
             numberOne = e.key;
             botLine.innerHTML = numberOne;
@@ -146,7 +148,7 @@ function getKeyboardInput(e){
             else operatorInput = e.key;
         }
         if (!numberTwo){
-            if (operatorInput == "equal"){
+            if (operatorInput == "equal" || e.key =="Enter"){
                 operatorInput = null;
                 return;
             }
@@ -156,14 +158,14 @@ function getKeyboardInput(e){
             numberOne = null;
         }
         else if (numberTwo && !numberOne){
-            if (operatorInput && e.key == "equal")return; 
+            if (operatorInput == "equal" || e.key =="Enter")return; 
             if (e.key == "Enter") operatorInput = "equal";
             if (e.key == "*") operatorInput = "x";
             else operatorInput = e.key;
             topLine.innerHTML = numberTwo + operatorInput;
             }
             else{
-                doOperation(operatorInput);
+                doOperation(e.key);
         }
     }
 }
