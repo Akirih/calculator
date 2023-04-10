@@ -42,6 +42,7 @@ function getOperator (){
         numberOne = null;
     }
     else if (numberTwo && !numberOne){
+        if (operatorInput && this.dataset.value == "equal")return; 
         operatorInput = this.dataset.value;
         topLine.innerHTML = numberTwo + operatorInput;
         }
@@ -74,7 +75,9 @@ function doOperation(operation){
             break;
     }
 
-    operatorInput = operation;
+    if (operation.dataset?.value) operatorInput = operation.dataset.value;
+    else operatorInput = operation;
+
     if (operatorInput == "equal") {
         operatorInput = null;
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo;
@@ -86,6 +89,7 @@ function doOperation(operation){
         }
     }else {
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo + operatorInput;
+        
         else topLine.innerHTML = numberTwo.toFixed(3) + operatorInput;
         if(numberTwo.toString().length >= 10){
             topLine.innerHTML ="Length exceeded";
@@ -134,8 +138,6 @@ function getKeyboardInput(e){
 
     }
     else {
-        if (e.key == "Enter") //operatorInput = "=";
-;
         if (!numberOne && !numberTwo) return;
         if (!operatorInput) {
             if (e.key == "Enter") operatorInput = "equal";
@@ -152,6 +154,7 @@ function getKeyboardInput(e){
             numberOne = null;
         }
         else if (numberTwo && !numberOne){
+            if (operatorInput && e.key == "equal")return; 
             if (e.key == "Enter") operatorInput = "equal";
             else operatorInput = e.key;
             topLine.innerHTML = numberTwo + operatorInput;
