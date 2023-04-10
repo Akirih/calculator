@@ -16,7 +16,8 @@ let operatorInput = null;
 
 function getValue(){
     if (numberOne == null) {
-        numberOne = this.dataset.value;
+        if (this.dataset.value == ".") numberOne = 0 + this.dataset.value;
+        else numberOne = this.dataset.value;
         botLine.innerHTML = numberOne;
     }
     else{
@@ -129,7 +130,8 @@ function getKeyboardInput(e){
     }       
     if (parseInt(e.key) || e.key == 0 || e.key =="."){
         if (numberOne == null) {
-            numberOne = e.key;
+            if (e.key == ".") number.One = 0 + e.key;
+            else numberOne = e.key;
             botLine.innerHTML = numberOne;
         }
         else{
