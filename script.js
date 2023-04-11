@@ -8,12 +8,18 @@ const clearLine = document.querySelector('.clear').addEventListener('click', lin
 const clearAll = document.querySelector('.all-clear').addEventListener('click', allClear);
 const advancedMode = document.querySelector('.advanced').addEventListener('click', advMode);
 document.addEventListener('keyup', getKeyboardInput);
+document.addEventListener('mousedown', () => mouse = true);
+document.addEventListener('mouseup', () => mouse = false);
 
 
 let numberOne = null;
 let numberTwo = null;
 let operatorInput = null;
 let failsafe = false;
+let mouse = false;
+
+
+
 
 function getValue(){
     if (numberTwo && !operatorInput) return;
@@ -133,6 +139,7 @@ function advMode (){
 }
 
 function getKeyboardInput(e){
+    if (mouse) return;
     const regex = /^\d|\.|\+|\-|\*|Enter|Delete|\/$/;
     if (!regex.test(e.key)) return; 
     if (e.key == "Delete") {
