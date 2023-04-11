@@ -121,7 +121,6 @@ function doOperation(operation){
 function lineClear (){
     if(failsafe){
         allClear ();
-        failsafe = false;
         return;
     }
     botLine.innerHTML ="&nbsp;";
@@ -134,6 +133,7 @@ function allClear (){
     numberOne = null;
     numberTwo = null;
     operatorInput = null;
+    failsafe = false;
 }
 
 function advMode (){
