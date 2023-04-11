@@ -30,8 +30,8 @@ function getValue(){
     }
     else{
         if (this.dataset.value.includes(".") && numberOne.includes("."))return;
-        if (numberOne.toString().length >= 15) return;
-        if (numberOne == 0 && this.dataset.value == 0) return;
+        if (numberOne.toString().length >= 10) return;
+        if (numberOne.slice(0,1) == 0 && this.dataset.value == 0 && !numberOne.includes(".")) return;
         numberOne += this.dataset.value.toString();  
         botLine.innerHTML = numberOne;
     }
@@ -94,7 +94,7 @@ function doOperation(operation){
         operatorInput = null;
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo;
         else topLine.innerHTML = numberTwo.toFixed(3);
-        if(numberTwo.toString().length >= 15){
+        if(numberTwo.toString().length >= 10){
             topLine.innerHTML ="Length exceeded";
             botLine.innerHTML ="Press AC to reset";
             failsafe = true;
@@ -104,7 +104,7 @@ function doOperation(operation){
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo + operatorInput;
         
         else topLine.innerHTML = numberTwo.toFixed(3) + operatorInput;
-        if(numberTwo.toString().length >= 15){
+        if(numberTwo.toString().length >= 10){
             topLine.innerHTML ="Length exceeded";
             botLine.innerHTML ="Press AC to reset";
             failsafe = true;
@@ -118,6 +118,7 @@ function doOperation(operation){
 function lineClear (){
     if(failsafe){
         allClear ();
+        failsafe = false;
         return;
     }
     botLine.innerHTML ="&nbsp;";
@@ -154,7 +155,8 @@ function getKeyboardInput(e){
         }
         else{
             if (e.key.includes(".") && numberOne.includes("."))return;
-            if (numberOne.toString().length >= 15) return; 
+            if (numberOne.slice(0,1) == 0 && e.key == 0 && !numberOne.includes(".")) return;
+            if (numberOne.toString().length >= 10) return; 
             numberOne += e.key.toString();  
             botLine.innerHTML = numberOne;
         }
