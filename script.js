@@ -22,6 +22,7 @@ let mouse = false;
 
 
 function getValue(){
+    if (failsafe) return;
     if (numberTwo && !operatorInput) return;
     if (numberOne == null) {
         if (this.dataset.value == ".") numberOne = 0 + this.dataset.value;
@@ -39,6 +40,7 @@ function getValue(){
 
 
 function getOperator (){
+    if (failsafe) return;
     if (!numberOne && !numberTwo) return;
     if (!operatorInput) operatorInput = this.dataset.value;
     if (!numberTwo){
@@ -62,6 +64,7 @@ function getOperator (){
 }
 
 function doOperation(operation){
+    if (failsafe) return;
     let botNumber = parseFloat(numberOne);
     let topNumber = parseFloat(numberTwo);     
     if (operation == "Enter") operation = 'equal';
@@ -140,6 +143,7 @@ function advMode (){
 }
 
 function getKeyboardInput(e){
+    if (failsafe) return;
     if (mouse) return;
     const regex = /^\d|\.|\+|\-|\*|Enter|Delete|\/$/;
     if (!regex.test(e.key)) return; 
