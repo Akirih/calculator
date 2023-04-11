@@ -13,8 +13,10 @@ document.addEventListener('keyup', getKeyboardInput);
 let numberOne = null;
 let numberTwo = null;
 let operatorInput = null;
+let failsafe = false;
 
 function getValue(){
+    if (numberTwo && !operatorInput) return;
     if (numberOne == null) {
         if (this.dataset.value == ".") numberOne = 0 + this.dataset.value;
         else numberOne = this.dataset.value;
@@ -22,7 +24,8 @@ function getValue(){
     }
     else{
         if (this.dataset.value.includes(".") && numberOne.includes("."))return;
-        if (numberOne.toString().length >= 9) return; 
+        if (numberOne.toString().length >= 15) return;
+        if (numberOne == 0 && this.dataset.value == 0) return;
         numberOne += this.dataset.value.toString();  
         botLine.innerHTML = numberOne;
     }
@@ -71,6 +74,7 @@ function doOperation(operation){
             if (botNumber == 0){
                 topLine.innerHTML ="You just had to...";
                 botLine.innerHTML ="Press AC to reset";
+                failsafe = true;
                 return;
             }
             numberTwo = topNumber / botNumber;
@@ -84,18 +88,20 @@ function doOperation(operation){
         operatorInput = null;
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo;
         else topLine.innerHTML = numberTwo.toFixed(3);
-        if(numberTwo.toString().length >= 10){
+        if(numberTwo.toString().length >= 15){
             topLine.innerHTML ="Length exceeded";
             botLine.innerHTML ="Press AC to reset";
+            failsafe = true;
             return;
         }
     }else {
         if (numberTwo % 1 == 0) topLine.innerHTML = numberTwo + operatorInput;
         
         else topLine.innerHTML = numberTwo.toFixed(3) + operatorInput;
-        if(numberTwo.toString().length >= 10){
+        if(numberTwo.toString().length >= 15){
             topLine.innerHTML ="Length exceeded";
             botLine.innerHTML ="Press AC to reset";
+            failsafe = true;
             return;
         }
     }
@@ -104,6 +110,10 @@ function doOperation(operation){
 }
 
 function lineClear (){
+    if(failsafe){
+        allClear ();
+        return;
+    }
     botLine.innerHTML ="&nbsp;";
     numberOne = null;
 }
@@ -119,6 +129,7 @@ function allClear (){
 function advMode (){
     topLine.innerHTML ="In development";
     botLine.innerHTML ="Press AC to reset";
+    failsafe = true;
 }
 
 function getKeyboardInput(e){
@@ -136,7 +147,7 @@ function getKeyboardInput(e){
         }
         else{
             if (e.key.includes(".") && numberOne.includes("."))return;
-            if (numberOne.toString().length >= 9) return; 
+            if (numberOne.toString().length >= 15) return; 
             numberOne += e.key.toString();  
             botLine.innerHTML = numberOne;
         }
